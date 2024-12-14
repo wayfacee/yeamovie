@@ -37,6 +37,7 @@ export function createReducerManager(
       if (keysToRemove.length > 0) {
         state = { ...state };
         keysToRemove.forEach((key) => {
+          // @ts-ignore
           delete state[key];
         });
         keysToRemove = [];
@@ -68,6 +69,7 @@ export function createReducerManager(
       }
 
       // удаляет
+      // @ts-ignore
       delete reducers[key];
       mountedReducers[key] = false;
 
