@@ -2,6 +2,7 @@ import { cn } from "@/shared/lib";
 import React from "react";
 import { Skeleton } from "@/shared/ui";
 import { SearchMovieCardSkeleton } from "../search-movie-card/search-movie-card.skeleton";
+import { Container } from "@/shared/components";
 
 interface Props {
   className?: string;
@@ -10,9 +11,10 @@ interface Props {
 export const SearchMovieListSkeleton: React.FC<Props> = React.memo(
   ({ className }) => {
     return (
-      <div
+      <Container
         className={cn(
           "flex items-center justify-center flex-col gap-16",
+          "mb-36",
           className,
         )}
       >
@@ -23,7 +25,7 @@ export const SearchMovieListSkeleton: React.FC<Props> = React.memo(
             <SearchMovieCardSkeleton key={index} />
           ))}
         </div>
-      </div>
+      </Container>
     );
   },
 );

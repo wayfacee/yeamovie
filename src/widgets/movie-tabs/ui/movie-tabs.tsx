@@ -26,7 +26,11 @@ export const MovieTabs: React.FC<Props> = React.memo(({ className }) => {
 
   return (
     <div className={className}>
-      <Tabs defaultValue="movies" onValueChange={handleTabChange}>
+      <Tabs
+        defaultValue="movies"
+        id="movie-tabs"
+        onValueChange={handleTabChange}
+      >
         <TabsList className="mt-3 mb-2">
           <TabsTrigger className="w-[260px]" value="movies">
             Популярные фильмы
@@ -36,14 +40,14 @@ export const MovieTabs: React.FC<Props> = React.memo(({ className }) => {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent className="w-full" value="movies">
+        <TabsContent className="w-full" id="movies" value="movies">
           <MovieList
             isLoading={loadingMovies}
             isFetching={fetchingMovies}
             data={movies}
           />
         </TabsContent>
-        <TabsContent value="series">
+        <TabsContent id="series" value="series">
           <MovieList
             isLoading={loadingSeries}
             isFetching={fetchingSeries}

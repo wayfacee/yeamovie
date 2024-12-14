@@ -3,6 +3,7 @@ import React from "react";
 import Logo from "../../assets/images/logo.svg";
 import { AppImage, Button } from "@/shared/ui";
 import { Link } from "react-router-dom";
+import { Container } from "../container";
 
 interface Props {
   className?: string;
@@ -17,32 +18,34 @@ export const Footer: React.FC<Props> = React.memo(({ className }) => {
       },
       {
         title: "Популярные фильмы",
-        link: "/",
+        link: "/#movie-tabs",
       },
       {
         title: "Популярные сериалы",
-        link: "/",
+        link: "/#movie-tabs",
       },
     ],
     [],
   );
 
   return (
-    <div
+    <footer
       className={cn(
-        "px-14 flex flex-row justify-between items-center text-center bg-[#080423] text-white text-base h-[200px]",
+        "px-14 bg-[#080423] h-[200px] text-center text-white text-base flex items-center",
         className,
       )}
     >
-      <AppImage src={Logo} alt="KinoMonster" />
+      <Container className="flex justify-between items-center w-full">
+        <AppImage src={Logo} alt="KinoMonster" />
 
-      <div className="flex flex-row gap-10">
-        {items.map(({ title, link }) => (
-          <Button  key={title} variant="ghost" asChild>
-            <Link to={link}>{title}</Link>
-          </Button>
-        ))}
-      </div>
-    </div>
+        <div className="flex flex-row gap-10">
+          {items.map(({ title, link }) => (
+            <Button key={title} variant="ghost" asChild>
+              <Link to={link}>{title}</Link>
+            </Button>
+          ))}
+        </div>
+      </Container>
+    </footer>
   );
 });

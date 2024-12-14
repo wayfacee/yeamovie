@@ -26,8 +26,7 @@ export const SearchMovieList: React.FC<Props> = React.memo(({ className }) => {
   });
 
   if (isLoading || isFetching)
-    return <SearchMovieListSkeleton className={className} />;
-  console.log(data, isLoading, isFetching);
+    return <SearchMovieListSkeleton />;
 
   if (!data && (!isLoading || !isFetching))
     return (

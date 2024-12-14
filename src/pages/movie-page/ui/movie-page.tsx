@@ -8,6 +8,7 @@ import {
   MovieRecommendations,
   MovieRecommendationsSkeleton,
 } from "@/features/movie-recommendations";
+import { Container } from "@/shared/components";
 
 const MoviePage = () => {
   const { id } = useParams();
@@ -21,7 +22,7 @@ const MoviePage = () => {
   }
 
   return (
-    <div className="m-14">
+    <Container className="my-14">
       <MovieBreadcrumb withMain className="mb-10" />
       <MovieDetails
         isLoading={isLoading}
@@ -33,7 +34,7 @@ const MoviePage = () => {
       <React.Suspense fallback={<MovieRecommendationsSkeleton />}>
         <MovieRecommendations />
       </React.Suspense>
-    </div>
+    </Container>
   );
 };
 

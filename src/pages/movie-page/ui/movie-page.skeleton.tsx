@@ -1,9 +1,10 @@
+import { Container } from "@/shared/components";
 import { Skeleton } from "@/shared/ui";
 import React from "react";
 
 export const MoviePageSkeleton: React.FC = React.memo(() => {
   return (
-    <div className="m-14">
+    <Container className="my-14">
       <div className="flex gap-5 mb-10">
         <Skeleton className="w-32 h-8" />
         <Skeleton className="w-32 h-8" />
@@ -57,6 +58,6 @@ export const MoviePageSkeleton: React.FC = React.memo(() => {
         </div>
       </div>
       ;
-    </div>
+    </Container>
   );
 });

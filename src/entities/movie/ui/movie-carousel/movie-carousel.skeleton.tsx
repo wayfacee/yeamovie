@@ -45,7 +45,7 @@ export const MovieCarouselSkeleton: React.FC<Props> = React.memo(
                     <Skeleton className="w-[200px] h-9" />
                   </div>
 
-                  <Skeleton className="bg-secondary rounded-2xl w-1/2" />
+                  <Skeleton className="rounded-2xl w-1/2 h-[444px]" />
                   {/* <p className="rounded-2xl object-cover w-1/2">sdfghjgfdsa</p> */}
                 </CardContent>
               </Card>

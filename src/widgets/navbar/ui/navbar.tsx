@@ -1,8 +1,7 @@
-
 import { cn } from "@/shared/lib";
 import React from "react";
 import LogoSvg from "@/shared/assets/images/logo.svg";
-import { SearchInput } from "@/shared/components";
+import { Container, SearchInput } from "@/shared/components";
 
 interface Props {
   className?: string;
@@ -10,16 +9,13 @@ interface Props {
 
 export const Navbar: React.FC<Props> = ({ className }) => {
   return (
-    <header
-      className={cn(
-        "flex justify-between items-center px-24 py-3 bg-[#080423]",
-        className,
-      )}
-    >
-      <img src={LogoSvg} alt="KinoMonster" />
+    <header className={cn("bg-[#080423] sticky top-0 shadow-lg z-10", className)}>
+      <Container className="flex justify-between items-center px-24 py-3 ">
+        <img src={LogoSvg} alt="KinoMonster" />
 
-      <SearchInput />
-      <span />
+        <SearchInput />
+        <span />
+      </Container>
     </header>
   );
 };
