@@ -1,0 +1,1 @@
+export { MovieBreadcrumb } from "./ui/movie-breadcrumb";

@@ -1,0 +1,1 @@
+export { FilteredMoviesList } from "./ui/filtered-movies-list";
