@@ -3,7 +3,6 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { SearchMovieCard } from "../search-movie-card/search-movie-card";
 import { SearchMovieListSkeleton } from "./search-movie-list.skeleton";
-import { useNotFoundMovieEffect } from "@/shared/hooks";
 import { useGetMovieByTitleQuery } from "../../api/movie-api";
 
 interface Props {
@@ -14,15 +13,6 @@ export const SearchMovieList: React.FC<Props> = React.memo(({ className }) => {
   const { query } = useParams();
   const { data, isLoading, isFetching } = useGetMovieByTitleQuery({
     title: query || "",
-  });
-
-  useNotFoundMovieEffect({
-    id: "#search-input",
-    title: "Фильмов с таким названием нет!",
-    description: "Попробуйте найти другой фильм...",
-    data,
-    isLoading,
-    isFetching,
   });
 
   if (isLoading || isFetching) return <SearchMovieListSkeleton />;

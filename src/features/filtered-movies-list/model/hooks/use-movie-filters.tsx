@@ -21,12 +21,14 @@ export const useMovieFilters = (): ReturnProps => {
       ? Number(rating.split("от")[1]?.trim())
       : 7;
 
-  const { data, isLoading, isFetching } = useGetFilteredMoviesQuery({
-    country,
-    genre,
-    year: yearNumber,
-    rating: ratingNumber,
-  });
+  const { data, isLoading, isFetching } = useGetFilteredMoviesQuery(
+    {
+      country,
+      genre,
+      year: yearNumber,
+      rating: ratingNumber,
+    },
+  );
 
   return {
     data,

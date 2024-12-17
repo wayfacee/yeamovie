@@ -19,11 +19,10 @@ import type { MovieSelectProps, MovieSelectTypes } from "../model/types/movie.in
 import { useItemSelect } from "../model/hooks/use-item-select";
 
 interface Props {
-  id?: string;
   data: MovieSelectProps;
 }
 
-export const MovieSelect: React.FC<Props> = React.memo(({ id, data }) => {
+export const MovieSelect: React.FC<Props> = React.memo(({ data }) => {
   const {
     categoryItems,
     label,
@@ -48,7 +47,6 @@ export const MovieSelect: React.FC<Props> = React.memo(({ id, data }) => {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          id={id}
           variant="outline"
           role="combobox"
           aria-expanded={open}

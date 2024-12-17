@@ -15,13 +15,9 @@ export const MovieCategories: React.FC<Props> = React.memo(({ className }) => {
       </p>
 
       <div className="flex gap-5">
-        {movieSelectConfig.map((item) =>
-          item.category === "страна" ? (
-            <MovieSelect id="country" key={item.id} data={item} />
-          ) : (
-            <MovieSelect key={item.id} data={item} />
-          ),
-        )}
+        {movieSelectConfig.map((item) => (
+          <MovieSelect key={item.id} data={item} />
+        ))}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import {
   IResponse,
 } from "@/shared/adapters";
 import { rtkApi } from "@/shared/api";
+import { toast } from "@/shared/hooks";
 
 const movieService = new MovieService(import.meta.env.VITE_API_KEY);
 
@@ -40,6 +41,22 @@ export const movieApi = rtkApi.injectEndpoints({
           throw new Error("Ошибка с запросом - getFilteredMovies");
         }
       },
+
+      onQueryStarted: async (_, { queryFulfilled }) => {
+        // _ - arg
+        try {
+          await queryFulfilled;
+          toast({
+            title: "Фильмы успешно загружены!",
+          });
+        } catch (error) {
+          toast({
+            variant: "destructive",
+            title: "Фильмов с такими данными нет!",
+            description: "Попробуйте выбрать другие параметры...",
+          });
+        }
+      },
     }),
 
     getMovieById: builder.query<MovieDtoV13 | undefined, { id: number }>({
@@ -62,6 +79,22 @@ export const movieApi = rtkApi.injectEndpoints({
           return { data };
         } catch (error: any) {
           throw new Error("Ошибка с запросом - getMovieByTitle");
+        }
+      },
+
+      onQueryStarted: async (_, { queryFulfilled }) => {
+        // _ - arg
+        try {
+          await queryFulfilled;
+          toast({
+            title: "Фильмы успешно загружены!",
+          });
+        } catch (error) {
+          toast({
+            variant: "destructive",
+            title: "Фильмов с таким названием нет!",
+            description: "Попробуйте ввести другое название...",
+          });
         }
       },
     }),
@@ -127,11 +160,11 @@ export const movieApi = rtkApi.injectEndpoints({
 export const {
   useGetRandomMoviesQuery,
   useLazyGetRandomMoviesQuery,
+  useGetFilteredMoviesQuery,
   useGetMovieByIdQuery,
   useGetMovieByTitleQuery,
   useGetCountriesQuery,
   useGetGenresQuery,
-  useGetFilteredMoviesQuery,
   useGetMoviesQuery,
   useLazyGetSeriesQuery,
 } = movieApi;

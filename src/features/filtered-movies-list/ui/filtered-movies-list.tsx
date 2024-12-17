@@ -1,7 +1,6 @@
 import { MovieList } from "@/entities/movie";
 import React from "react";
 import { useMovieFilters } from "../model/hooks/use-movie-filters";
-import { useNotFoundMovieEffect } from "@/shared/hooks";
 
 interface Props {
   className?: string;
@@ -10,14 +9,6 @@ interface Props {
 export const FilteredMoviesList: React.FC<Props> = React.memo(
   ({ className }) => {
     const { data, isLoading, isFetching } = useMovieFilters();
-    useNotFoundMovieEffect({
-      id: "#country",
-      title: "Фильмов с такими данными нет!",
-      description: "Попробуйте выбрать другие параметры...",
-      data,
-      isLoading,
-      isFetching,
-    });
 
     return (
       <MovieList
