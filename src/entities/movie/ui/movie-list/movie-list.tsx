@@ -1,6 +1,6 @@
 import React from "react";
 import { MovieCard } from "../movie-card/movie-card";
-import { type MovieDtoV13 } from "@openmoviedb/kinopoiskdev_client";
+import { type MovieDtoV13 } from "@/shared/adapters";
 import { MovieCardSkeleton } from "../movie-card/movie-card.skeleton";
 import { Link } from "react-router-dom";
 import { Button } from "@/shared/ui";

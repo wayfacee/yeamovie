@@ -3,7 +3,7 @@ import { AppImage, Skeleton } from "@/shared/ui";
 import React from "react";
 import NotLoadImg from "@/shared/assets/images/not-load-img.png";
 import { Link } from "react-router-dom";
-import { type MovieDtoV13 } from "@openmoviedb/kinopoiskdev_client";
+import { type MovieDtoV13 } from "@/shared/adapters";
 
 interface Props {
   data?: MovieDtoV13;

@@ -30,14 +30,6 @@ export const useItemSelect = ({ items, type }: Props): ReturnProps => {
   const param = searchParams.get(type) || getDefaultValue(type);
   const [open, setOpen] = React.useState(false);
 
-  // const param = React.useMemo(
-  //   () => searchParams.get(type) || getDefaultValue(type),
-  //   [searchParams, type],
-  // );
-  // const initialValue = React.useMemo(
-  //   () => items.find((item) => item.slug === param),
-  //   [items, param],
-  // );
   const [value, setValue] = React.useState(
     items.find((item) => item.slug === param),
   );
@@ -60,12 +52,6 @@ export const useItemSelect = ({ items, type }: Props): ReturnProps => {
       setSearchParams(newParams);
     }
 
-    // const foundCountry = items.find(
-    //   (item) => item.slug.toLowerCase() === param.toLowerCase(),
-    // );
-    // if (foundCountry) {
-    //   setValue(foundCountry);
-    // }
   }, [searchParams, setSearchParams, type]);
 
   return {

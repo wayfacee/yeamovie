@@ -1,4 +1,4 @@
-import type { MovieSelectProps } from "@/entities/movie";
+import { type MovieSelectProps } from "@/features/movie-select";
 
 export const movieSelectConfig: MovieSelectProps[] = [
   {

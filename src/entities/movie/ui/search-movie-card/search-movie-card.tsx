@@ -1,6 +1,6 @@
 import { cn } from "@/shared/lib";
 import { AppImage, Button, Skeleton } from "@/shared/ui";
-import { type MeiliMovieEntity } from "@openmoviedb/kinopoiskdev_client";
+import { type MeiliMovieEntity } from "@/shared/adapters";
 import React from "react";
 import { Link } from "react-router-dom";
 import NotLoadImg from "@/shared/assets/images/not-loaded.png";
@@ -16,6 +16,7 @@ export const SearchMovieCard: React.FC<Props> = React.memo(
     const [active, setActive] = React.useState(false);
     const { id, poster, name, description, rating, year, genres, countries } =
       data;
+
     let newRating = rating.toFixed(1);
     if (Number(newRating) === 0) newRating = "6.4";
 

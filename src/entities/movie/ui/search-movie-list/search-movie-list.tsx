@@ -1,10 +1,10 @@
 import { cn } from "@/shared/lib";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useMovieSearch } from "../../api/movie-api";
 import { SearchMovieCard } from "../search-movie-card/search-movie-card";
 import { SearchMovieListSkeleton } from "./search-movie-list.skeleton";
 import { useNotFoundMovieEffect } from "@/shared/hooks";
+import { useGetMovieByTitleQuery } from "../../api/movie-api";
 
 interface Props {
   className?: string;
@@ -12,7 +12,7 @@ interface Props {
 
 export const SearchMovieList: React.FC<Props> = React.memo(({ className }) => {
   const { query } = useParams();
-  const { data, isLoading, isFetching } = useMovieSearch({
+  const { data, isLoading, isFetching } = useGetMovieByTitleQuery({
     title: query || "",
   });
 
@@ -25,8 +25,7 @@ export const SearchMovieList: React.FC<Props> = React.memo(({ className }) => {
     isFetching,
   });
 
-  if (isLoading || isFetching)
-    return <SearchMovieListSkeleton />;
+  if (isLoading || isFetching) return <SearchMovieListSkeleton />;
 
   if (!data && (!isLoading || !isFetching))
     return (

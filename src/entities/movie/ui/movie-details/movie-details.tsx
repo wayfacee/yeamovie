@@ -1,6 +1,6 @@
 import { cn } from "@/shared/lib";
 import { AppImage, Skeleton } from "@/shared/ui";
-import { type MovieDtoV13 } from "@openmoviedb/kinopoiskdev_client";
+import { type MovieDtoV13 } from "@/shared/adapters";
 import React from "react";
 import { MovieDetailsSkeleton } from "./movie-details.skeleton";
 
@@ -55,7 +55,7 @@ export const MovieDetails: React.FC<Props> = React.memo(
               </p>
             </div>
           </div>
-          
+
           <p className="text-lg w-[800px] mb-12">
             {description
               ? description

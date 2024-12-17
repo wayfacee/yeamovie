@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { toast } from "@/shared/hooks";
-import { type MovieDtoV13 } from "@openmoviedb/kinopoiskdev_client";
+import { type MovieDtoV13 } from "@/shared/adapters";
 import { ToastAction } from "@/shared/ui/toast";
 import { Link } from "react-router-dom";
 

@@ -14,12 +14,9 @@ import React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/shared/lib";
 import { MovieSelectSkeleton } from "./movie-select.skeleton";
-import { useItemSelect } from "@/shared/hooks";
-import { useMovieSelect } from "../../model/hooks/use-movie-select";
-import type {
-  MovieSelectProps,
-  MovieSelectTypes,
-} from "../../model/types/movie.interface";
+import { useMovieSelect } from "../model/hooks/use-movie-select";
+import type { MovieSelectProps, MovieSelectTypes } from "../model/types/movie.interface";
+import { useItemSelect } from "../model/hooks/use-item-select";
 
 interface Props {
   id?: string;

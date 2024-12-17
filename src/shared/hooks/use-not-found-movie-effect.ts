@@ -1,9 +1,6 @@
 import { useEffect } from "react";
 import { toast } from "@/shared/hooks";
-import type {
-  MeiliMovieEntity,
-  MovieDtoV13,
-} from "@openmoviedb/kinopoiskdev_client";
+import type { MeiliMovieEntity, MovieDtoV13 } from "@/shared/adapters";
 
 interface Props {
   id: string;
@@ -31,7 +28,7 @@ export const useNotFoundMovieEffect = ({
         description,
       });
 
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         const elem = document.querySelector(id) as HTMLElement;
 
         if (elem) {
@@ -40,6 +37,8 @@ export const useNotFoundMovieEffect = ({
           console.error("Элемент не найден!");
         }
       }, 600);
+
+      return () => clearTimeout(timeoutId);
     }
   }, [data, isLoading, isFetching]);
 };

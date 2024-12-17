@@ -1,242 +1,137 @@
-import { rtkApi } from "@/shared/api";
+import { MovieService } from "../lib/movie.service";
 import {
-  type IResponse,
-  KinopoiskDev,
   type MovieDtoV13,
-  MovieQueryBuilder,
+  type MeiliMovieEntity,
   type PossibleValueDto,
-  SORT_TYPE,
-  SPECIAL_VALUE,
-} from "@openmoviedb/kinopoiskdev_client";
+  IResponse,
+} from "@/shared/adapters";
+import { rtkApi } from "@/shared/api";
 
-const kp = new KinopoiskDev(import.meta.env.VITE_API_KEY);
+const movieService = new MovieService(import.meta.env.VITE_API_KEY);
 
-interface Props {
-  country: string;
-  genre: string;
-  year: number;
-  rating: number;
-}
-
-const movieApi = rtkApi.injectEndpoints({
-  endpoints: (build) => ({
-    getRandomMovie: build.query<MovieDtoV13, void>({
-      queryFn: async () => {
-        const queryBuilder = new MovieQueryBuilder();
-
-        try {
-          const baseQuery = queryBuilder
-            .select([
-              "id",
-              "name",
-              "description",
-              "year",
-              "alternativeName",
-              "description",
-              "backdrop.url",
-            ])
-            .filterExact("backdrop.url", SPECIAL_VALUE.NOT_NULL)
-            .filterExact("isSeries", false)
-            .filterExact("description", SPECIAL_VALUE.NOT_NULL);
-
-          const firstQuery = baseQuery.paginate(1, 1).build();
-
-          const firstRes = await kp.movie.getByFilters(firstQuery);
-
-          if (firstRes.data) {
-            const { pages } = firstRes.data;
-            const randomPage = Math.floor(Math.random() * pages) + 1;
-            const query = baseQuery.paginate(randomPage, 1).build();
-
-            const { data, /* error, */ message } =
-              await kp.movie.getByFilters(query);
-
-            if (data) {
-              return { data: data.docs[0] };
-            }
-            return { error: { status: 500, data: message } };
-          }
-
-          return { error: { status: 500, data: firstRes.message } };
-        } catch (e: any) {
-          return { error: { status: 500, data: e.message } };
-        }
-      },
-    }),
-    getRandomMovies: build.query<MovieDtoV13[], { paginate?: number }>({
+export const movieApi = rtkApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getRandomMovies: builder.query<MovieDtoV13[], { paginate?: number }>({
       queryFn: async ({ paginate = 3 }) => {
-        const queryBuilder = new MovieQueryBuilder();
-
         try {
-          const baseQuery = queryBuilder
-            .select([
-              "id",
-              "name",
-              "description",
-              "year",
-              "alternativeName",
-              "description",
-              "backdrop.url",
-            ])
-            .filterExact("backdrop.url", SPECIAL_VALUE.NOT_NULL)
-            .filterExact("description", SPECIAL_VALUE.NOT_NULL)
-            .filterExact("alternativeName", SPECIAL_VALUE.NOT_NULL);
-
-          // Выполняем первый запрос, чтобы узнать общее количество страниц
-          const firstQuery = baseQuery.paginate(1, 3).build();
-          const firstRes = await kp.movie.getByFilters(firstQuery);
-
-          if (firstRes.data) {
-            const { pages } = firstRes.data;
-
-            // Генерируем 3 случайных страницы
-            const randomPages = Array.from(
-              { length: paginate || 3 },
-              () => Math.floor(Math.random() * pages) + 1,
-            );
-
-            // Выполняем запросы для 3 случайных страниц
-            const moviePromises = randomPages.map((page) => {
-              const query = baseQuery.paginate(page, 1).build();
-              return kp.movie.getByFilters(query);
-            });
-
-            const results = await Promise.all(moviePromises);
-
-            // Составляем массив фильмов
-            const movies = results
-              .map((res) => res.data?.docs[0])
-              .filter((movie): movie is MovieDtoV13 => !!movie);
-
-            if (movies.length > 0) {
-              return { data: movies };
-            }
-
-            return { error: { status: 500, data: "Failed to fetch movies." } };
-          }
-
-          return { error: { status: 500, data: firstRes.message } };
+          const data = await movieService.getRandomMovies(paginate);
+          return { data };
         } catch (e: any) {
           return { error: { status: 500, data: e.message } };
         }
       },
     }),
-    getCountries: build.query<IResponse<PossibleValueDto[]>, void>({
-      queryFn: async () => {
-        try {
-          const data =
-            await kp.movie.getPossibleValuesByField("countries.name");
-          return { data };
-        } catch (e) {
-          console.log("getGenres", e);
-          return {
-            error: {
-              status: 500,
-              data: { message: "Ошибка с запросом - getGenres" },
-            },
-          };
-        }
-      },
-    }),
-    getGenres: build.query<IResponse<PossibleValueDto[]>, void>({
-      queryFn: async () => {
-        try {
-          const data = await kp.movie.getPossibleValuesByField("genres.name");
-          return { data };
-        } catch (e) {
-          console.log("getGenres", e);
-          return {
-            error: {
-              status: 500,
-              data: { message: "Ошибка с запросом - getGenres" },
-            },
-          };
-        }
-      },
-    }),
-    getFilteredMovies: build.query<MovieDtoV13[], Props>({
+
+    getFilteredMovies: builder.query<
+      MovieDtoV13[],
+      { country: string; genre: string; year: number; rating: number }
+    >({
       queryFn: async ({ country, genre, year, rating }) => {
         try {
-          const queryBuilder = new MovieQueryBuilder();
-
-          const query = queryBuilder
-            .select([
-              "id",
-              "name",
-              "description",
-              "rating",
-              "backdrop.url",
-              "year",
-              "genres",
-              "countries.name",
-            ])
-            .filterRange("year", [year, 2024])
-            .filterRange("rating.kp", [rating, 10])
-            .filterExact("backdrop.url", SPECIAL_VALUE.NOT_NULL)
-            .filterExact("isSeries", false)
-            .filterExact("countries.name", country)
-            .filterExact("genres.name", genre)
-            .sort("rating.kp", SORT_TYPE.DESC)
-            .paginate(1, 4)
-            .build();
-
-          const { data, error, message } = await kp.movie.getByFilters(query);
-
-          if (error) {
-            console.log(error, message);
-            return { error: { status: 500, data: message } };
-          }
-
-          if (!data || !data.docs) {
-            return {
-              error: {
-                status: 500,
-                data: { message: "Данные отсутствуют getFilteredMovies" },
-              },
-            };
-          }
-
-          return { data: data.docs };
-        } catch (e) {
+          const data = await movieService.getFilteredMovies({
+            country,
+            genre,
+            year,
+            rating,
+          });
+          return { data };
+        } catch (e: any) {
           console.log("getMovies", e);
           throw new Error("Ошибка с запросом - getFilteredMovies");
         }
       },
     }),
-    getMovieById: build.query<MovieDtoV13, { id: number }>({
+
+    getMovieById: builder.query<MovieDtoV13 | undefined, { id: number }>({
       queryFn: async ({ id }) => {
         try {
-          const { data, error, message } = await kp.movie.getById(id);
-
-          if (error) {
-            console.log(error, message);
-            return { error: { status: 500, data: message } };
-          }
-
-          if (!data) {
-            return {
-              error: {
-                status: 500,
-                data: { message: "Данные отсутствуют" },
-              },
-            };
-          }
-
+          const data = await movieService.getMovieById(id);
           return { data };
-        } catch (e) {
-          console.log("getMovieById", e);
+        } catch (error: any) {
           throw new Error("Ошибка с запросом - getMovieById");
+        }
+      },
+    }),
+    getMovieByTitle: builder.query<
+      MeiliMovieEntity[] | undefined,
+      { title: string }
+    >({
+      queryFn: async ({ title }) => {
+        try {
+          const data = await movieService.getMovieByTitle(title);
+          return { data };
+        } catch (error: any) {
+          throw new Error("Ошибка с запросом - getMovieByTitle");
+        }
+      },
+    }),
+
+    getCountries: builder.query<IResponse<PossibleValueDto[]>, void>({
+      queryFn: async () => {
+        try {
+          const data = await movieService.getCountries();
+          return { data };
+        } catch (e: any) {
+          console.log("getCountries", e);
+          return {
+            error: {
+              status: 500,
+              data: { message: "Ошибка с запросом - getCountries" },
+            },
+          };
+        }
+      },
+    }),
+    getGenres: builder.query<IResponse<PossibleValueDto[]>, void>({
+      queryFn: async () => {
+        try {
+          const data = await movieService.getGenres();
+          return { data };
+        } catch (e: any) {
+          console.log("getGenres", e);
+          return {
+            error: {
+              status: 500,
+              data: { message: "Ошибка с запросом - getGenres" },
+            },
+          };
+        }
+      },
+    }),
+
+    getMovies: builder.query<MovieDtoV13[], void>({
+      queryFn: async () => {
+        try {
+          const data = await movieService.getRandomMovies();
+          return { data };
+        } catch (e: any) {
+          console.log("getMovies", e);
+          throw new Error("Ошибка с запросом - getMovies");
+        }
+      },
+    }),
+    getSeries: builder.query<MovieDtoV13[], void>({
+      queryFn: async () => {
+        try {
+          const data = await movieService.getSeries();
+          return { data };
+        } catch (e: any) {
+          console.log("getSeries", e);
+          throw new Error("Ошибка с запросом - getSeries");
         }
       },
     }),
   }),
 });
+
 export const {
-  useGetRandomMovieQuery: useRandomMovie,
-  useGetRandomMoviesQuery: useRandomMovies,
-  useLazyGetRandomMoviesQuery: useLazyRandomMovies,
-  useGetCountriesQuery: useCountries,
-  useGetGenresQuery: useGenres,
-  useGetFilteredMoviesQuery: useFilteredMovies,
-  useGetMovieByIdQuery: useMovieById,
+  useGetRandomMoviesQuery,
+  useLazyGetRandomMoviesQuery,
+  useGetMovieByIdQuery,
+  useGetMovieByTitleQuery,
+  useGetCountriesQuery,
+  useGetGenresQuery,
+  useGetFilteredMoviesQuery,
+  useGetMoviesQuery,
+  useLazyGetSeriesQuery,
 } = movieApi;

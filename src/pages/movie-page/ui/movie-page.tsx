@@ -1,20 +1,33 @@
-import { MovieDetails, MovieFrames, useMovieById } from "@/entities/movie";
-import { MovieBreadcrumb } from "@/features/movie-breadcrumb";
-import { type MovieDtoV13 } from "@openmoviedb/kinopoiskdev_client";
+import {
+  MovieDetails,
+  MovieFrames,
+  useGetMovieByIdQuery,
+} from "@/entities/movie";
+import { type MovieDtoV13 } from "@/shared/adapters";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MoviePageSkeleton } from "./movie-page.skeleton";
 import {
   MovieRecommendations,
   MovieRecommendationsSkeleton,
 } from "@/features/movie-recommendations";
-import { Container } from "@/shared/components";
+import { Container, MovieBreadcrumb } from "@/shared/components";
 
 const MoviePage = () => {
   const { id } = useParams();
-  const { data, isLoading, error } = useMovieById({
+  const { data, isLoading, error } = useGetMovieByIdQuery({
     id: Number(id) || 1,
   });
+
+  const navigate = useNavigate();
+  const paths = [
+    { id: 1, name: "Назад", onClick: () => navigate(-1) },
+    {
+      id: 2,
+      name: "Главная",
+      to: "/",
+    },
+  ];
 
   if (isLoading) return <MoviePageSkeleton />;
   if (!data || error) {
@@ -23,7 +36,7 @@ const MoviePage = () => {
 
   return (
     <Container className="my-14">
-      <MovieBreadcrumb withMain className="mb-10" />
+      <MovieBreadcrumb paths={paths} className="mb-10" />
       <MovieDetails
         isLoading={isLoading}
         className="mb-14"

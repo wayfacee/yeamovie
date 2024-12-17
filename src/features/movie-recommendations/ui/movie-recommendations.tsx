@@ -1,4 +1,4 @@
-import { MovieCard, useLazyRandomMovies } from "@/entities/movie";
+import { MovieCard, useLazyGetRandomMoviesQuery } from "@/entities/movie";
 import { cn } from "@/shared/lib";
 import {
   Card,
@@ -18,7 +18,7 @@ interface Props {
 
 const MovieRecommendations: React.FC<Props> = React.memo(({ className }) => {
   const [getRandomMovies, { data, isLoading, isFetching }] =
-    useLazyRandomMovies();
+    useLazyGetRandomMoviesQuery();
 
   React.useEffect(() => {
     getRandomMovies({ paginate: 9 });

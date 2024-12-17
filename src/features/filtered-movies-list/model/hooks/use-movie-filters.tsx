@@ -1,5 +1,5 @@
-import { useFilteredMovies } from "@/entities/movie";
-import { type MovieDtoV13 } from "@openmoviedb/kinopoiskdev_client";
+import { useGetFilteredMoviesQuery } from "@/entities/movie";
+import { type MovieDtoV13 } from "@/shared/adapters";
 import { useSearchParams } from "react-router-dom";
 
 interface ReturnProps {
@@ -21,7 +21,7 @@ export const useMovieFilters = (): ReturnProps => {
       ? Number(rating.split("от")[1]?.trim())
       : 7;
 
-  const { data, isLoading, isFetching } = useFilteredMovies({
+  const { data, isLoading, isFetching } = useGetFilteredMoviesQuery({
     country,
     genre,
     year: yearNumber,

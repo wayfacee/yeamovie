@@ -1,4 +1,4 @@
-import { cn } from "@/shared/lib";
+import { cn } from "../../lib";
 import {
   Card,
   CardContent,
@@ -6,7 +6,7 @@ import {
   CarouselContent,
   CarouselItem,
   Skeleton,
-} from "@/shared/ui";
+} from "../../ui";
 import Autoplay from "embla-carousel-autoplay";
 import React from "react";
 

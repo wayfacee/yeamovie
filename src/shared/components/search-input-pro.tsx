@@ -1,4 +1,3 @@
-import { useMovieSearch } from "@/entities/search";
 import { cn } from "@/shared/lib/utils";
 import { Search } from "lucide-react";
 import React from "react";
@@ -6,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useClickAway } from "react-use";
 import { AppImage } from "../ui";
 import NotLoadImg from "@/shared/assets/images/not-load-img.png";
+import { useGetMovieByTitleQuery } from "@/entities/movie";
 
 interface Props {
   className?: string;
@@ -16,7 +16,7 @@ export const SearchInputPro: React.FC<Props> = ({ className }) => {
   const [focused, setFocused] = React.useState(false);
   const [highlightedIndex, setHighlightedIndex] = React.useState(-1);
   const ref = React.useRef(null);
-  const { data: movies } = useMovieSearch({
+  const { data: movies } = useGetMovieByTitleQuery({
     title: searchQuery,
   });
 

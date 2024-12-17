@@ -9,25 +9,22 @@ interface Props {
   className?: string;
 }
 
-export const Footer: React.FC<Props> = React.memo(({ className }) => {
-  const items = React.useMemo(
-    () => [
-      {
-        title: "Главная",
-        link: "/",
-      },
-      {
-        title: "Популярные фильмы",
-        link: "/#movie-tabs",
-      },
-      {
-        title: "Популярные сериалы",
-        link: "/#movie-tabs",
-      },
-    ],
-    [],
-  );
+const items = [
+  {
+    title: "Главная",
+    link: "/",
+  },
+  {
+    title: "Популярные фильмы",
+    link: "/#movie-tabs",
+  },
+  {
+    title: "Популярные сериалы",
+    link: "/#movie-tabs",
+  },
+];
 
+export const Footer: React.FC<Props> = React.memo(({ className }) => {
   return (
     <footer
       className={cn(

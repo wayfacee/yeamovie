@@ -28,3 +28,4 @@ dist-ssr
 .prettierignore
 
 .env*local
+/wdep

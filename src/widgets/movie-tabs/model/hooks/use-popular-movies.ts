@@ -1,6 +1,6 @@
 import React from "react";
-import { useMovies, useSeriesLazy } from "../../api/movie-tabs-api";
-import { type MovieDtoV13 } from "@openmoviedb/kinopoiskdev_client";
+import { type MovieDtoV13 } from "@/shared/adapters";
+import { useGetMoviesQuery, useLazyGetSeriesQuery } from "@/entities/movie";
 
 interface ReturnProps {
   movies?: MovieDtoV13[];
@@ -17,11 +17,11 @@ export const usePopularMovies = (): ReturnProps => {
     data: movies,
     isLoading: loadingMovies,
     isFetching: fetchingMovies,
-  } = useMovies();
+  } = useGetMoviesQuery();
   const [
     fetchSeries,
     { data: series, isLoading: loadingSeries, isFetching: fetchingSeries },
-  ] = useSeriesLazy();
+  ] = useLazyGetSeriesQuery();
 
   const [_, setActiveTab] = React.useState("movies");
 

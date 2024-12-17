@@ -1,4 +1,4 @@
-import { useCountries, useGenres } from "../../api/movie-api";
+import { useGetCountriesQuery, useGetGenresQuery } from "@/entities/movie";
 import type { MovieSelectProps } from "../types/movie.interface";
 
 interface ReturnProps {
@@ -17,12 +17,13 @@ export const useMovieSelect = (data: MovieSelectProps): ReturnProps => {
     data: countriesData,
     isLoading: isLoadingCountries,
     // error: countriesError,
-  } = useCountries();
+  } = useGetCountriesQuery();
+
   const {
     data: genresData,
     isLoading: isLoadingGenres,
     // error: genresError,
-  } = useGenres();
+  } = useGetGenresQuery();
 
   const categoryItems: { name: string; slug: string }[] | undefined =
     label === "Жанры"
