@@ -5,9 +5,9 @@ import { Container, NavigationBreadcrumb } from "@/shared/ui";
 import {
   MovieRecommendations,
   MovieRecommendationsSkeleton,
-} from "@/features/movies/movie-recommendations";
+} from "@/features/movie/movie-recommendations";
 import { MoviesPageSkeleton } from "./MoviesPage.skeleton";
-import { MovieFrames } from "@/features/movies/movie-frames";
+import { MovieFrames } from "@/features/movie/movie-frames";
 import { useMovieById } from "../../model/hooks/useMovieById";
 import { useNavigationPaths } from "../../model/hooks/useNavigationPaths";
 

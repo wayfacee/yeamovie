@@ -34,6 +34,6 @@
     "src",
     "wdep/movie-tabs-api.ts",
     "wdep/movie-api-dep.ts",
-    "src/features/movies/filtered-movies-list/ui/FilteredMoviesList.tsx"
+    "src/features/movie/filtered-movies-list/ui/FilteredMoviesList.tsx"
   ]
 }

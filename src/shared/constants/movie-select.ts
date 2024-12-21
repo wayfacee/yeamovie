@@ -1,4 +1,4 @@
-import { MovieSelectProps } from "@/features/movies/movie-select";
+import { MovieSelectProps } from "@/features/movie/movie-select";
 
 export const movieSelectConfig: MovieSelectProps[] = [
   {

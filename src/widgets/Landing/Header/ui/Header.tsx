@@ -2,7 +2,7 @@ import { cn } from "@/shared/libs";
 import React from "react";
 import LogoSvg from "@/shared/assets/images/logo.svg";
 import { Container } from "@/shared/ui";
-import { SearchInput } from "@/features/movies/search-input";
+import { SearchInput } from "@/features/movie/search-input";
 
 interface Props {
   className?: string;

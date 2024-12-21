@@ -1,5 +1,5 @@
 import { useGetRandomMoviesQuery } from "@/entities/movie";
-import { MovieCarousel } from "@/features/movies/movie-carousel";
+import { MovieCarousel } from "@/features/movie/movie-carousel";
 import React from "react";
 
 interface Props {

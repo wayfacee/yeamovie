@@ -1,4 +1,4 @@
-import { MovieSelect } from "@/features/movies/movie-select";
+import { MovieSelect } from "@/features/movie/movie-select";
 import { movieSelectConfig } from "@/shared/constants";
 import { cn } from "@/shared/libs";
 import React from "react";

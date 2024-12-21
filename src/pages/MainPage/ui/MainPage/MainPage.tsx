@@ -2,7 +2,7 @@ import { MovieTabs } from "@/widgets/movie/MovieTabs";
 import React from "react";
 import { MovieCategories } from "@/widgets/movie/MovieCategories";
 import { Container } from "@/shared/ui";
-import { FilteredMoviesList } from "@/features/movies/filtered-movies-list";
+import { FilteredMoviesList } from "@/features/movie/filtered-movies-list";
 import { MovieBanner } from "../MovieBanner/MovieBanner";
 
 const MainPage = () => {
