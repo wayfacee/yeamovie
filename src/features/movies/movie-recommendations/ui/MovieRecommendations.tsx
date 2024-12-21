@@ -46,9 +46,9 @@ const MovieRecommendations: React.FC<Props> = React.memo(({ className }) => {
                 </CarouselItem>
               ))} */}
 
-            {data?.map((item, index) => (
+            {data?.map((item) => (
               <CarouselItem
-                key={index}
+                key={item.id}
                 className="flex-shrink-0 w-full max-w-sm"
               >
                 <div className="p-1">
