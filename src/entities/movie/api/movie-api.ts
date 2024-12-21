@@ -1,4 +1,4 @@
-import { MovieService } from "../lib/movie.service";
+import { MovieService } from "../model/lib/movie.service";
 import {
   type MovieDtoV13,
   type MeiliMovieEntity,
