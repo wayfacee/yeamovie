@@ -1,1 +1,0 @@
-export { MovieTabs } from "./ui/movie-tabs";

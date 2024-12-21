@@ -1,8 +1,7 @@
-export { MovieFrames } from "./ui/movie-frames/movie-frames";
-export { MovieDetails } from "./ui/movie-details/movie-details";
-export { MovieList } from "./ui/movie-list/movie-list";
-export { MovieCard } from "./ui/movie-card/movie-card";
-export { SearchMovieList } from "./ui/search-movie-list/search-movie-list";
+export { SearchMoviesList } from "./ui/SearchMoviesList/SearchMoviesList";
+export { MovieDetails } from "./ui/MovieDetails/MovieDetails";
+export { MoviesList } from "./ui/MoviesList/MoviesList";
+export { MovieCard } from "./ui/MovieCard/MovieCard";
 export {
   useGetRandomMoviesQuery,
   useLazyGetRandomMoviesQuery,

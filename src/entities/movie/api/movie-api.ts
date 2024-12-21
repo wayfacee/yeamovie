@@ -135,7 +135,7 @@ export const movieApi = rtkApi.injectEndpoints({
     getMovies: builder.query<MovieDtoV13[], void>({
       queryFn: async () => {
         try {
-          const data = await movieService.getRandomMovies();
+          const data = await movieService.getMovies();
           return { data };
         } catch (e: any) {
           console.log("getMovies", e);

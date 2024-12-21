@@ -1,25 +1,20 @@
-import { MainPage } from "@/pages/main-page";
-import MoviePage from "@/pages/movie-page/ui/movie-page";
-import SearchPage from "@/pages/search-page/ui/search-page";
-import { Footer } from "@/shared/components";
-import { Navbar } from "@/widgets/navbar";
-import { Route, Routes } from "react-router-dom";
+import { memo } from "react";
+import { Footer } from "@/widgets/Landing/Footer";
+import { Header } from "@/widgets/Landing/Header";
+import { AppRouter } from "./providers/router";
 
 const App = () => {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      <Header />
 
       <div className="flex-1">
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/movie/:id" element={<MoviePage />} />
-          <Route path="/search/:query" element={<SearchPage />} />
-        </Routes>
+        <AppRouter />
       </div>
+
       <Footer />
     </div>
   );
 };
 
-export default App;
+export default memo(App);

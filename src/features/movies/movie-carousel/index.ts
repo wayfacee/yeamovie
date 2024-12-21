@@ -1,0 +1,1 @@
+export { MovieCarousel } from "./ui/MovieCarousel";

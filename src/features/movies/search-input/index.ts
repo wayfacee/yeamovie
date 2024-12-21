@@ -1,0 +1,1 @@
+export { SearchInputPro as SearchInput } from "./ui/SearchInputPro";

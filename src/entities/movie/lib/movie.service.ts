@@ -173,10 +173,6 @@ export class MovieService {
 
     return data?.docs || [];
   }
-  /**
-       *  } catch (e) {
-            
-       */
 
   async getSeries(): Promise<MovieDtoV13[]> {
     const queryBuilder = new MovieQueryBuilder();
@@ -210,8 +206,4 @@ export class MovieService {
 
     return data?.docs || [];
   }
-  /**
-   *
-   *
-   */
 }
